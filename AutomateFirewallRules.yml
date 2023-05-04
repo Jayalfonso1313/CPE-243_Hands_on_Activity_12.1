@@ -7,6 +7,6 @@
         name: acl_manager
         tasks_from: block_ip
       vars:
-        source_ip: 172.17.13.98
-        destination_ip: 192.168.0.10
+        source_ip: 192.168.56.106
+        destination_ip: 192.168.56.102
         ansible_network_os: checkpoint
