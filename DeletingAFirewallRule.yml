@@ -6,7 +6,7 @@
         name: acl_manager
         Tasks_from: unblock_ip
       vars:
-        source_ip: 192.168.0.10
-        destination_ip: 192.168.0.11
+        source_ip: 192.168.56.06
+        destination_ip: 192.168.56.109
         ansible_network_os: checkpoint
 

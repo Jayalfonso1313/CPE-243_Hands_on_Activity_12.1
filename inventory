@@ -1,2 +1,2 @@
 [checkpoint]
-192.168.56.103
+192.168.56.102 ansible_network_os=checkpoint
