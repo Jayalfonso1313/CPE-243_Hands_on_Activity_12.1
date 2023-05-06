@@ -1,12 +1,67 @@
-- name: delete block list entry
-  hosts: checkpoint
-  connection: httpapi
+---
+- name: Delete block list entry
+  hosts:
+    - Controle_Node_1
+    - Controle_Node_2
+  become: true
 
-    - include_role:
-        name: acl_manager
-        Tasks_from: unblock_ip
-      vars:
-        source_ip: 192.168.56.06
-        destination_ip: 192.168.56.109
-        ansible_network_os: checkpoint
+  tasks:
+    - name: Unblock IP address on Ubuntu
+      when: "'Controle_Node_1' in group_names"
+      ufw:
+        rule: allow
+        proto: any
+        from_ip: 192.168.56.109
+
+    - name: Checking Status on Ubuntu
+      when: "'Controle_Node_1' in group_names"
+      shell: sudo ufw status
+      register: ubuntu_fw_stat
+
+    - name: Printing firewall status on Ubuntu
+      when: "'Controle_Node_1' in group_names"
+      debug:
+        var: ubuntu_fw_stat.stdout_lines
+
+    - name: Unblock IP address on CentOS
+      when: "'Controle_Node_2' in group_names"
+      firewalld:
+        permanent: true
+        state: enabled
+        zone: public
+        source: 192.168.56.102
+
+    - name: Checking Status on CentOS
+      when: "'Controle_Node_2' in group_names"
+      shell: sudo firewall-cmd --zone=public --list-all
+      register: centos_fw_stat
+
+    - name: Printing firewall status on CentOS
+      when: "'Controle_Node_2' in group_names"
+      debug:
+        var: centos_fw_stat.stdout_lines
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
